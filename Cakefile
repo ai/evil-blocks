@@ -131,4 +131,4 @@ task 'gem', 'Build RubyGem package', ->
       fs.mkdirsSync('pkg/') unless fs.existsSync('pkg/')
       gemFile = fs.readdirSync('build/').filter( (i) -> i.match(/\.gem$/) )[0]
       copy('build/' + gemFile, 'pkg/' + gemFile)
-      #fs.removeSync('build/')
+      fs.removeSync('build/')
