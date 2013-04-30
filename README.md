@@ -100,7 +100,7 @@ evil.block '.user-page', ($, b, block) ->
   It will execute `callback` only if block `selector` exists in current page.
   So you can be free to join all JS files in one.
 * `evil.block` will send to `callback` three arguments: `$` is jQuery,
-  `b` is “b-function”, `block` is a finded blocks by `selector`.
+  `b` is “b-function”, `block` is blocks found by `selector`.
 * B-function is like jQuery function, but find only inside finded block
   (alias `b('a') = $('a', selector)`).
 * Bind JavaScript to `data-role` attribute to be free to change styles
