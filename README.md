@@ -125,6 +125,24 @@ Load `evil-blocks.js` in your script:
 //= require evil-blocks
 ```
 
+### Ruby
+
+If you use Sinatra or other non-Rails framework you can add Evil Blocks path
+to Sprockets environment:
+```ruby
+EvilBlocks.install(sprockets)
+```
+
+And change Slim options to support `@data-rule` shortcut:
+```ruby
+EvilBlocks.install_to_slim!
+```
+
+Then just load `evil-blocks.js` in your script:
+```js
+//= require evil-blocks
+```
+
 ### Others
 
 Add file `lib/evil-blocks.js` to your project.
