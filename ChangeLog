@@ -1,2 +1,5 @@
+== 0.2 (Little Boy, 6th August 1945)
+* Support non-Rails applications in gem.
+
 == 0.1 (The Gadget, 16th July 1945)
 * Initial release.
