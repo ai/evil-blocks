@@ -23,7 +23,9 @@ module EvilBlocks
     #
     # Copy from role-rails by Sasha Koss.
     # https://github.com/kossnocorp/role-rails
-    Slim::Parser.default_options[:shortcut]['@'] = { :attr => 'data-role' }
+    shortcut = Slim::Parser.default_options[:shortcut]
+    shortcut['@']  = { :attr =>  'data-role' }
+    shortcut['@.'] = { :attr => ['data-role', 'class'] }
     Slim::Engine.default_options[:merge_attrs]['data-role'] = ' '
   end
 
