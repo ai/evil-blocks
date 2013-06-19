@@ -2,12 +2,12 @@
   "name": "evil-blocks",
   "version": "0.2.0",
   "dependencies": {
-    "jquery-browser": ">= 1.9.1-1"
+    "jquery-browser": ">= 2.0.0-1"
   },
   "devDependencies": {
-    "coffee-script": "1.6.2",
-    "mocha":         "1.10.0",
-    "chai":          "1.6.0",
+    "coffee-script": "1.6.3",
+    "mocha":         "1.11.0",
+    "chai":          "1.7.0",
     "fs-extra":      "0.6.1",
     "jsdom":         "0.6.5",
     "jquery":        "1.8.3"
