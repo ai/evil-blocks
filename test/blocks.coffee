@@ -34,14 +34,14 @@ describe 'evil.block', ->
     called.should.eql('ab')
 
   it 'should send jQuery and page', ->
-    body '<b class="page" /><b class="page" />'
+    body '<b class="page" />'
     args = []
     evil.block '.page', ->
       args = arguments
       false
 
     args[0].should.eql(jQuery)
-    args[2].should.eql($('.page'))
+    args[2].should.eql($ $('.page').get(0))
 
   it 'should send b function', ->
     body '<b class="page">' +
@@ -59,3 +59,10 @@ describe 'evil.block', ->
     evil.block '.page', ($, _b) -> b = _b
 
     b.camelCaseRole.length.should.eql(1)
+
+  it 'should call on every finded block', ->
+    body '<b class="page" />'
+    blocks = []
+    evil.block '.page', ($, b, block)-> blocks.push(block)
+
+    blocks.should.eql [$ $('.page').get(0), $ $('.page').get(1)]
