@@ -1,3 +1,7 @@
+== 0.3 (Fat Man, 9th August 1945)
+* Add shortcut to Slim to set data-role and class.
+* Run callback on every block copy in page.
+
 == 0.2 (Little Boy, 6th August 1945)
 * Support non-Rails applications in gem.
 
