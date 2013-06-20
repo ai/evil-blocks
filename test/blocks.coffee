@@ -61,8 +61,8 @@ describe 'evil.block', ->
     b.camelCaseRole.length.should.eql(1)
 
   it 'should call on every finded block', ->
-    body '<b class="page" />'
+    body '<b class="page" /><b class="page" />'
     blocks = []
     evil.block '.page', ($, b, block)-> blocks.push(block)
 
-    blocks.should.eql [$ $('.page').get(0), $ $('.page').get(1)]
+    blocks.should.eql ($ el for el in $ '.page')
