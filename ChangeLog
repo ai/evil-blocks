@@ -1,3 +1,6 @@
+== 0.3.1 (Gilda, 1st July 1946)
+* Fix in multiple block copies on one page (by Andrei Miroshnik).
+
 == 0.3 (Fat Man, 9th August 1945)
 * Add shortcut to Slim to set data-role and class.
 * Run callback on every block copy in page.
