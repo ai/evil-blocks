@@ -69,13 +69,15 @@ describe 'evil.block', ->
 
   it 'should properly find elems inside', ->
     body """
-    <div class="page"> <b data-role="elem"/> </div>
-    <div class="page"> <b data-role="elem"/> </div>
+      <div class="page"> <b data-role="elem"/> </div>
+      <div class="page"> <b data-role="elem"/> </div>
     """
-    bs = []
+
+    bs     = []
     blocks = []
     evil.block '.page', ($, b, block) ->
       bs.push b
       blocks.push block
+
     bs[0]('@elem').should.eql blocks[0].find('@elem')
     bs[1]('@elem').should.eql blocks[1].find('@elem')
