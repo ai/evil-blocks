@@ -77,5 +77,5 @@ describe 'evil.block', ->
     evil.block '.page', ($, b, block) ->
       bs.push b
       blocks.push block
-    bs[0]('.elem').should.eql blocks[0].find('.elem')
-    bs[1]('.elem').should.eql blocks[1].find('.elem')
+    bs[0]('@elem').should.eql blocks[0].find('@elem')
+    bs[1]('@elem').should.eql blocks[1].find('@elem')
