@@ -25,7 +25,8 @@ project =
     fs.readdirSync('lib/').map( (i) -> "lib/#{i}" )
 
   title: ->
-    @name()[0].toUpperCase() + @name()[1..-1]
+    capitalize = (s) -> s[0].toUpperCase() + s[1..-1]
+    @name().split('-').map( (i) -> capitalize(i) ).join(' ')
 
 mocha =
 
