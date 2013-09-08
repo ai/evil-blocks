@@ -17,8 +17,8 @@ and [role-rails](https://github.com/kossnocorp/role-rails) by Sasha Koss.
   .gallery-control.is-big
     // Evil Blocks add @data-role alias to Slim
     // .class to bind styles, @data-role to bind JavaScript
-    a.gallery-left@next-photo href="#"
-    a.gallery-right@prev-photo href="#"
+    a.gallery-left@nextPhoto href="#"
+    a.gallery-right@prevPhoto href="#"
     img src="photos/1.jpg"
     img src="photos/2.jpg"
     img src="photos/3.jpg"
@@ -46,32 +46,29 @@ and [role-rails](https://github.com/kossnocorp/role-rails) by Sasha Koss.
 ### CoffeeScript
 
 ```coffee
-# Will execute callback only if .gallery-control is in current page
-evil.block '.gallery-control', ($, b, block) ->
-  current   = 0
-  showPhoto = (num) ->
-    # b-function finds only inside .gallery-control
-    b('img').hide()
-    b("img:eql(#{ num })").show()
+# Will execute init only if .gallery-control is in current page
+evil.block '.gallery-control',
+  current: 0
 
-  initState: ->
-    showPhoto(current)
+  showPhoto: (num) ->
+    @('img').hide().
+      filter("eql(#{ num })").show()
 
-  buttons: ->
-    # Shortcuts for data-role="next-photo"
-    b.nextPhoto.click ->
-      showPhoto(current += 1)
+  init: ->
+    @showPhoto(@current)
 
-  slideShow: ->
+  'click on @nextPhoto', (link, event) ->
+    @showPhoto(current += 1)
+
+  'on start-slideshow', ->
     # You can communicate between blocks by simple events
-    block.on 'slideshow-start', ->
-      setTimeout( -> b.nextPhoto.click() , 5000)
+    setTimeout( => @nextPhoto.click() , 5000)
 
-# Will execute callback only on user page, where .user-page exists
-evil.block '.user-page', ($, b, block) ->
+# Will execute init only on user page, where .user-page exists
+evil.block '.user-page',
 
-  startSlidehow: ->
-    b('.gallery-control').trigger('slideshow-start')
+  init: ->
+    @('.gallery-control').trigger('start-slideshow')
 ```
 
 ## Styles
@@ -96,20 +93,19 @@ evil.block '.user-page', ($, b, block) ->
 * Unobtrusive JavaScript.
 * Write animation and states in CSS. JavaScript just changes CSS classes.
 * Avoid rendering. Send from server HTML, not JSON.
-* Wrap scrips to revive blocks in `evil.block(selector, callback)`.
-  It will execute `callback` only if block `selector` exists in current page.
-  So you can be free to join all JS files in one.
-* `evil.block` will send to `callback` three arguments: `$` is jQuery,
-  `b` is “b-function”, `block` is blocks found by `selector`.
-* B-function is like jQuery function, but find only inside finded block
-  (alias `b('a') = $('a', selector)`).
+* Split JS by widgets. Describe widget class in `evil.block(selector, klass)`.
+  It will create `klass` instance and call `init` method for each selectors,
+  which exist in current page. So you can be free to join all JS files in one.
+* Describe events by `EVENTS on SELECTORS` methods
+  (like `keyup submit on @name, @family`). This methods save this and
+  receive jQuery node in first argument and event in second.
 * Bind JavaScript to `data-role` attribute to be free to change styles
   and classes without dangeros of breaking scripts.
-* You can easy find special`data-role` by b-function. It will has properties
-  for all roles inside block (`@role-name` will be camelized to `b.roleName`).
-* If `callback` return object, `evil-block` will execute all it methods.
-  It’s useful to split your script to several initializer with separated
-  variables scope.
+* Every tag with `data-role` will by as property in object with jQuery node.
+* If you need to find elements inside block, use `@(selector)` function.
+* If you need to communicate between blocks, use custom events and create
+  block events listeners by `on EVENTS` method. It will receive events object
+  as first argument and event parameters as next arguments.
 
 ## Install
 

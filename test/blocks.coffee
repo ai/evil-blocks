@@ -1,7 +1,8 @@
 evil = window.evil
-body = (html) -> $('#fixtures').html(html)
+body = (html) -> evil.block.vitalize $('#fixtures').html(html)
 
 describe 'evil.block', ->
+  afterEach -> $('#fixtures').html('')
 
   it 'should add role alias', ->
     body '<b data-role="role-test" />' +
@@ -10,74 +11,132 @@ describe 'evil.block', ->
     $('@role-test').length.should.eql(1)
     $('@multi').length.should.eql(2)
 
-  it 'should execute callback only if find selector', ->
-    body '<b class="no-page" />'
-    called = false
-    evil.block '.page', -> called = true
+  describe 'function API', ->
 
-    called.should.be.false
+    it 'should execute callback only if find selector', ->
+      called = false
+      evil.block '.page', -> called = true
 
-    body '<b class="page" />'
-    evil.block '.page', -> called = true
+      body '<b class="no-page" />'
+      called.should.be.false
 
-    called.should.be.true
+      body '<b class="page" />'
+      called.should.be.true
 
-  it 'should execute objects of functions', ->
-    called = ''
-    body '<b class="page" />'
-    evil.block '.page', ->
-      initA: ->
-        called += 'a'
-      initB: ->
-        called += 'b'
+    it 'should execute objects of functions', ->
+      called = ''
+      evil.block '.page', ->
+        initA: ->
+          called += 'a'
+        initB: ->
+          called += 'b'
 
-    called.should.eql('ab')
+      body '<b class="page" />'
+      called.should.eql('ab')
 
-  it 'should send jQuery and page', ->
-    body '<b class="page" />'
-    args = []
-    evil.block '.page', ->
-      args = arguments
-      false
+    it 'should send jQuery and page', ->
+      args = []
+      evil.block '.page', ->
+        args = arguments
+        false
 
-    args[0].should.eql(jQuery)
-    args[2].should.eql($ $('.page').get(0))
+      body '<b class="page" />'
+      args[0].should.eql(jQuery)
+      args[2].should.eql($ $('.page').get(0))
 
-  it 'should send b function', ->
-    body '<b class="page">' +
-           '<a class="b" data-role="link" /><a data-role="link" />' +
-         '</b><a data-role="link" />'
-    b = null
-    evil.block '.page', ($, _b) -> b = _b
+    it 'should send b function', ->
+      b = null
+      evil.block '.page', ($, _b) -> b = _b
 
-    b('a').length.should.eql(2)
-    b.link.length.should.eql(2)
+      body '<b class="page">' +
+             '<a class="b" data-role="link" /><a data-role="link" />' +
+           '</b><a data-role="link" />'
 
-  it 'should came case role name', ->
-    body '<b class="page"><a data-role="camel-case-role" /></b>'
-    b = null
-    evil.block '.page', ($, _b) -> b = _b
+      b('a').length.should.eql(2)
+      b.link.length.should.eql(2)
 
-    b.camelCaseRole.length.should.eql(1)
+    it 'should came case role name', ->
+      b = null
+      evil.block '.page', ($, _b) -> b = _b
 
-  it 'should call on every finded block', ->
-    body '<b class="page" /><b class="page" />'
-    blocks = []
-    evil.block '.page', ($, b, block)-> blocks.push(block)
+      body '<b class="page"><a data-role="camel-case-role" /></b>'
+      b.camelCaseRole.length.should.eql(1)
 
-    blocks.should.eql ($ el for el in $ '.page')
+    it 'should call on every finded block', ->
+      blocks = []
+      evil.block '.page', ($, b, block)-> blocks.push(block)
 
-  it 'should properly find elems inside', ->
-    body """
-      <div class="page"> <b data-role="elem"/> </div>
-      <div class="page"> <b data-role="elem"/> </div>
-    """
+      body '<b class="page" /><b class="page" />'
+      blocks.should.eql ($ el for el in $ '.page')
 
-    bs     = []
-    blocks = []
-    evil.block '.page', ($, b, block) ->
-      bs.push b
-      blocks.push block
+    it 'should properly find elems inside', ->
+      bs     = []
+      blocks = []
+      evil.block '.page', ($, b, block) ->
+        bs.push b
+        blocks.push block
 
-    bs[0]('@elem').should.eql blocks[0].find('@elem')
-    bs[1]('@elem').should.eql blocks[1].find('@elem')
+      body """
+        <div class="page"> <b data-role="elem"/> </div>
+        <div class="page"> <b data-role="elem"/> </div>
+      """
+
+      bs[0]('@elem').should.eql blocks[0].find('@elem')
+      bs[1]('@elem').should.eql blocks[1].find('@elem')
+
+  describe 'class API', ->
+
+    it 'should execute callback only if find selector', ->
+      called = false
+      evil.block '.page',
+        init: ->
+          called = true
+
+      body '<b class="no-page" />'
+      called.should.be.false
+
+      body '<b class="page" />'
+      called.should.be.true
+
+    it 'should create properties for each role', ->
+      prop = false
+      evil.block '.page',
+        init: ->
+          prop = @roleName
+
+      body '<div class="page"> <b data-role="roleName"/> </div>'
+      prop[0].should.eql $('@roleName')[0]
+
+    it 'should listen block events', ->
+      burning = ''
+      evil.block '.page',
+        'on fire burn': (e, param) ->
+          burning += ' ' + e.type + ' ' + param
+
+      body '<div class="page"></div>'
+      $('.page').trigger('fire', '1').trigger('burn', '2')
+      burning.should.eql ' fire 1 burn 2'
+
+    it 'should listen elements events', ->
+      burning = ''
+      evil.block '.page',
+        'fire burn on @a, @b': (el, e, param) ->
+          burning += ' ' + el.data('role') + ' ' + param
+
+      body """
+        <div class="page">
+          <b data-role="a" /><b data-role="b" />
+        </div>
+      """
+      $('@a').trigger('fire', '1')
+      $('@b').trigger('burn', '2')
+      burning.should.eql ' a 1 b 2'
+
+    it 'should find inside', ->
+      finded = false
+      evil.block '.page',
+        init: ->
+          finded = @('b').text()
+
+      body '<div class="page"> <b data-role="role">finded</b> </div>'
+      finded.should.eql 'finded'
