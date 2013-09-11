@@ -132,6 +132,26 @@ describe 'evil.block', ->
       $('@b').trigger('burn', '2')
       burning.should.eql ' a 1 b 2'
 
+    it 'listens body events', ->
+      burning = ''
+      evil.block '.page',
+        'fire on body': (e, param) ->
+          burning = param
+
+      body '<div class="page"></div>'
+      $('body').trigger('fire', '1')
+      burning.should.eql '1'
+
+    it 'listens window events', ->
+      burning = ''
+      evil.block '.page',
+        'fire on window': (e, param) ->
+          burning = param
+
+      body '<div class="page"></div>'
+      $(window).trigger('fire', '1')
+      burning.should.eql '1'
+
     it 'finds inside', ->
       finded = false
       evil.block '.page',
