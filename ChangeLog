@@ -1,3 +1,6 @@
+== 0.4.1 (Yoke, 30th April 1948)
+* Allow to listen body and window events from object style.
+
 == 0.4 (X-Ray, 14th April 1948)
 * Add new object style.
 
