@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.authors  = ['Andrey "A.I." Sitnik']
   s.email    = ['andrey@sitnik.ru']
   s.homepage = 'https://github.com/ai/evil-blocks'
-  s.license  = 'LGPL-3'
+  s.license  = 'MIT'
 
   s.add_dependency 'sprockets', '>= 2'
 end
