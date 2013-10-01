@@ -9,7 +9,7 @@
     "mocha":         "1.13.0",
     "chai":          "1.8.0",
     "fs-extra":      "0.6.4",
-    "jsdom":         "0.8.5",
+    "jsdom":         "0.8.6",
     "jquery":        "1.8.3"
   },
   "scripts": {
