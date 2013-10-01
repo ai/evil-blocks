@@ -1,3 +1,6 @@
+== 0.4.2 (Zebra, 14th May 1948)
+* Don’t listen bubbled events as block event.
+
 == 0.4.1 (Yoke, 30th April 1948)
 * Allow to listen body and window events from object style.
 
