@@ -117,6 +117,16 @@ describe 'evil.block', ->
       $('.page').trigger('fire', '1').trigger('burn', '2')
       burning.should.eql ' fire 1 burn 2'
 
+    it 'checks source for block events', ->
+      burning = ''
+      evil.block '.page',
+        'on fire': ->
+          burning = '1'
+
+      body '<div class="page"> <b data-role="a"/> </div>'
+      $('@a').trigger('fire')
+      burning.should.eql('')
+
     it 'listens elements events', ->
       burning = ''
       evil.block '.page',
@@ -140,6 +150,16 @@ describe 'evil.block', ->
 
       body '<div class="page"></div>'
       $('body').trigger('fire', '1')
+      burning.should.eql '1'
+
+    it 'listens body bubble events', ->
+      burning = ''
+      evil.block '.page',
+        'fire on body': ->
+          burning = '1'
+
+      body '<div class="page"></div>'
+      $('.page').trigger('fire')
       burning.should.eql '1'
 
     it 'listens window events', ->
