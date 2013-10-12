@@ -13,6 +13,6 @@
     "jquery":        "1.8.3"
   },
   "scripts": {
-    "test": "mocha --reporter spec --require ./test/mocha --require ./lib/evil-blocks --compilers coffee:coffee-script"
+    "test": "mocha"
   }
 }

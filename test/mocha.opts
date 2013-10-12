@@ -1,0 +1,4 @@
+ --reporter spec
+ --require ./test/mocha
+ --require ./lib/evil-blocks
+ --compilers coffee:coffee-script
