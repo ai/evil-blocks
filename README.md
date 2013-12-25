@@ -57,10 +57,10 @@ evil.block '.gallery-control',
   init: ->
     @showPhoto(@current)
 
-  'click on @nextPhoto', (link, event) ->
+  'click on @nextPhoto': (link, event) ->
     @showPhoto(current += 1)
 
-  'on start-slideshow', ->
+  'on start-slideshow': ->
     # You can communicate between blocks by simple events
     setTimeout( => @nextPhoto.click() , 5000)
 
