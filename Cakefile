@@ -70,7 +70,7 @@ mocha =
     files.map( (i) -> "<script src=\"/#{i}\"></script>" ).join("\n  ")
 
   system: ->
-    @scripts ['node_modules/jquery-browser/lib/jquery.js',
+    @scripts ['node_modules/jquery/dist/jquery.js',
               'node_modules/mocha/mocha.js',
               'node_modules/chai/chai.js']
 
