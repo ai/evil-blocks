@@ -2,7 +2,7 @@
   "name": "evil-blocks",
   "version": "0.4.2",
   "dependencies": {
-    "jquery": "> 2"
+    "jquery": ">= 2.1.0-beta2"
   },
   "devDependencies": {
     "coffee-script": "1.6.3",
