@@ -5,3 +5,6 @@ node_modules
 
 build
 pkg
+
+Gemfile.lock
+.bundle
