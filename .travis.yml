@@ -1,3 +1,7 @@
 language: node_js
 node_js:
   - "0.10"
+before_install:
+  - rvm use 2.1.0 --install --binary --fuzzy
+  - bundler install
+script: rspec test/slim_spec.rb
