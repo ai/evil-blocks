@@ -1,9 +1,10 @@
-evil = window.evil
-body = (html) -> evil.block.vitalize $('#fixtures').html(html)
+evil     = window.evil
+body     = (html) -> evil.block.vitalize fixtures.html(html)
+fixtures = $('#fixtures')
 
 describe 'evil.block', ->
   afterEach ->
-    $('#fixtures').html('')
+    fixtures.html('')
     window.evil.block.vitalizers = []
 
   it 'adds role alias', ->
@@ -99,6 +100,22 @@ describe 'evil.block', ->
 
       body '<b class="page" />'
       called.should.be.true
+
+    it 'executes only once on same block', ->
+      called = 0
+      evil.block '.page',
+        init: ->
+          called += 1
+
+      body '<b class="page" />'
+      called.should.be.eql(1)
+
+      evil.block.vitalize fixtures
+      called.should.be.eql(1)
+
+      fixtures.append('<b class="page" />')
+      evil.block.vitalize fixtures
+      called.should.be.eql(2)
 
     it 'creates properties for each role', ->
       prop = false
