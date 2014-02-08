@@ -2,7 +2,9 @@ evil = window.evil
 body = (html) -> evil.block.vitalize $('#fixtures').html(html)
 
 describe 'evil.block', ->
-  afterEach -> $('#fixtures').html('')
+  afterEach ->
+    $('#fixtures').html('')
+    window.evil.block.vitalizers = []
 
   it 'adds role alias', ->
     body '<b data-role="role-test" />' +
