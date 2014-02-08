@@ -14,6 +14,41 @@ describe 'evil.block', ->
     $('@role-test').length.should.eql(1)
     $('@multi').length.should.eql(2)
 
+  describe '.vitalize()', ->
+
+    it 'calls vitalize on document by default', ->
+      called = false
+      evil.block '.page',
+        init: ->
+          called = true
+
+      fixtures.html('<b class="page" />')
+      evil.block.vitalize()
+
+      called.should.be.true
+
+    it 'calls vitalize on subnode', ->
+      called = []
+      evil.block '.page',
+        init: ->
+          called.push @block[0].tagName
+
+      fixtures.html('<a class="page" /><span><b class="page" /></span>')
+      evil.block.vitalize($('span'))
+
+      called.should.eql ['B']
+
+    it 'accepts DOM nodes', ->
+      called = []
+      evil.block '.page',
+        init: ->
+          called.push @block[0].tagName
+
+      fixtures.html('<a class="page" /><span><b class="page" /></span>')
+      evil.block.vitalize($('span')[0])
+
+      called.should.eql ['B']
+
   describe 'function API', ->
 
     it 'executes callback only if find selector', ->
