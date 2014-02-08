@@ -2,5 +2,7 @@ language: node_js
 node_js:
   - "0.10"
 before_install:
-  - bundler install
-script: rspec test/slim_spec.rb
+  - bundle install
+script:
+  - rspec test/slim_spec.rb
+  - npm test
