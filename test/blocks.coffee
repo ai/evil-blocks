@@ -18,9 +18,8 @@ describe 'evil.block', ->
 
     it 'calls vitalize on document by default', ->
       called = false
-      evil.block '.page',
-        init: ->
-          called = true
+      evil.block '.page', ->
+        called = true
 
       fixtures.html('<b class="page" />')
       evil.block.vitalize()
@@ -29,9 +28,8 @@ describe 'evil.block', ->
 
     it 'calls vitalize on subnode', ->
       called = []
-      evil.block '.page',
-        init: ->
-          called.push @block[0].tagName
+      evil.block '.page', ->
+        called.push @block[0].tagName
 
       fixtures.html('<a class="page" /><span><b class="page" /></span>')
       evil.block.vitalize($('span'))
@@ -40,18 +38,17 @@ describe 'evil.block', ->
 
     it 'accepts DOM nodes', ->
       called = []
-      evil.block '.page',
-        init: ->
-          called.push @block[0].tagName
+      evil.block '.page', ->
+        called.push @block[0].tagName
 
       fixtures.html('<a class="page" /><span><b class="page" /></span>')
       evil.block.vitalize($('span')[0])
 
       called.should.eql ['B']
 
-  describe 'function API', ->
+  describe '()', ->
 
-    it 'executes callback only if find selector', ->
+    it 'understands function as init', ->
       called = false
       evil.block '.page', -> called = true
 
@@ -60,69 +57,6 @@ describe 'evil.block', ->
 
       body '<b class="page" />'
       called.should.be.true
-
-    it 'executes objects of functions', ->
-      called = ''
-      evil.block '.page', ->
-        initA: ->
-          called += 'a'
-        initB: ->
-          called += 'b'
-
-      body '<b class="page" />'
-      called.should.eql('ab')
-
-    it 'sends jQuery and page', ->
-      args = []
-      evil.block '.page', ->
-        args = arguments
-        false
-
-      body '<b class="page" />'
-      args[0].should.eql(jQuery)
-      args[2].should.eql($ $('.page').get(0))
-
-    it 'sends b function', ->
-      b = null
-      evil.block '.page', ($, _b) -> b = _b
-
-      body '<b class="page">' +
-             '<a class="b" data-role="link" /><a data-role="link" />' +
-           '</b><a data-role="link" />'
-
-      b('a').length.should.eql(2)
-      b.link.length.should.eql(2)
-
-    it 'camel-cases role name', ->
-      b = null
-      evil.block '.page', ($, _b) -> b = _b
-
-      body '<b class="page"><a data-role="camel-case-role" /></b>'
-      b.camelCaseRole.length.should.eql(1)
-
-    it 'calls on every finded block', ->
-      blocks = []
-      evil.block '.page', ($, b, block)-> blocks.push(block)
-
-      body '<b class="page" /><b class="page" />'
-      blocks.should.eql ($ el for el in $ '.page')
-
-    it 'properly finds elems inside', ->
-      bs     = []
-      blocks = []
-      evil.block '.page', ($, b, block) ->
-        bs.push b
-        blocks.push block
-
-      body """
-        <div class="page"> <b data-role="elem"/> </div>
-        <div class="page"> <b data-role="elem"/> </div>
-      """
-
-      bs[0]('@elem').should.eql blocks[0].find('@elem')
-      bs[1]('@elem').should.eql blocks[1].find('@elem')
-
-  describe 'class API', ->
 
     it 'executes callback only if find selector', ->
       called = false
@@ -234,3 +168,34 @@ describe 'evil.block', ->
 
       body '<div class="page"> <b data-role="role">finded</b> </div>'
       finded.should.eql 'finded'
+
+    it 'has block property', ->
+      block = []
+      evil.block '.page', ->
+          block.push @block
+
+      body '<div class="page"></div><div class="page"></div>'
+
+      block.length.should.eql(2)
+      block[0].length.should.eql(1)
+      block[0].is('.page').should.be.true
+      block[1].length.should.eql(1)
+      block[1].is('.page').should.be.true
+
+    it 'calls init after all bindings', ->
+      events = []
+
+      evil.block '.a',
+        init: ->
+          $('.b').trigger('fire')
+        'on fire': ->
+          events.push('a')
+
+      evil.block '.b',
+        init: ->
+          $('.a').trigger('fire')
+        'on fire': ->
+          events.push('b')
+
+      body '<div class="a" /><div class="b" />'
+      events.should.eql ['b', 'a']
