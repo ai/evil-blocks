@@ -57,7 +57,7 @@ evil.block '.gallery-control',
   init: ->
     @showPhoto(@current)
 
-  'click on @nextPhoto': (link, event) ->
+  'click on @nextPhoto': (event) ->
     @showPhoto(current += 1)
 
   'on start-slideshow': ->
