@@ -118,8 +118,8 @@ describe 'evil.block', ->
     it 'listens elements events', ->
       burning = ''
       evil.block '.page',
-        'fire burn on @a, @b': (el, e, param) ->
-          burning += ' ' + el.data('role') + ' ' + param
+        'fire burn on @a, @b': (e, param) ->
+          burning += ' ' + e.el.data('role') + ' ' + param
 
       body """
         <div class="page">
