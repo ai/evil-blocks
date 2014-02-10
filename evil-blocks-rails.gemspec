@@ -2,16 +2,14 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'evil-blocks-rails'
   s.version     = VERSION
-  s.summary     = 'Tiny framework for web pages to split your app ' +
-                  'to separated blocks'
-  s.description = 'Evil Block is a tiny framework for web pages. ' +
-                  'It split your application to separated blocks and isolate ' +
-                  'their styles and scripts.'
+  s.summary     = 'Evil Block is a tiny JS framework for web pages ' +
+                  'to split your app to separated blocks'
 
-  s.files            = ['lib/assets/javascripts/evil-blocks.js',
+  s.files            = ['lib/assets/javascripts/evil-blocks.debug.js',
+                        'lib/assets/javascripts/evil-blocks.js',
                         'lib/evil-blocks-rails.rb',
-                        'LICENSE', 'README.md', 'ChangeLog']
-  s.extra_rdoc_files = ['LICENSE', 'README.md', 'ChangeLog']
+                        'LICENSE', 'README.md', 'ChangeLog.md']
+  s.extra_rdoc_files = ['LICENSE', 'README.md', 'ChangeLog.md']
   s.require_path     = 'lib'
 
   s.author   = 'Andrey Sitnik'
