@@ -22,7 +22,7 @@ project =
       map( (i) -> "test/#{i}" )
 
   libs: ->
-    fs.readdirSync('lib/').map( (i) -> "lib/#{i}" )
+    fs.readdirSync('lib/').sort().reverse().map( (i) -> "lib/#{i}" )
 
   title: ->
     capitalize = (s) -> s[0].toUpperCase() + s[1..-1]
