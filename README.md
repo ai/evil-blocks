@@ -214,7 +214,7 @@ equal to `@block.on 'click', '@button', ->`.
 You should prevent default event behavior by `event.preventDefault()`,
 `return false` will not do anything in block’s listeners. I recommend
 [evil-front/links] to prevent default behavior in any links with `href="#"`
-to clean your code.
+to clean your code.
 
 You can also bind events on body and window:
 
