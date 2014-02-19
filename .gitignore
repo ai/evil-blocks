@@ -5,6 +5,7 @@ node_modules
 
 build
 pkg
+*.gem
 
 Gemfile.lock
 .bundle

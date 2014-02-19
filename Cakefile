@@ -107,6 +107,9 @@ task 'clean', 'Remove all generated files', ->
   fs.removeSync('build/') if fs.existsSync('build/')
   fs.removeSync('pkg/')   if fs.existsSync('pkg/')
 
+  for file in fs.readdirSync('./')
+    fs.removeSync(file) if file.match(/\.gem$/)
+
 task 'min', 'Create minimized version of library', ->
   fs.mkdirsSync('pkg/') unless fs.existsSync('pkg/')
   uglify = require('uglify-js')
