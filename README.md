@@ -2,17 +2,16 @@
 
 Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
 
-* **Split code to independent blocks.** Divide and rule is a most common idea
-  in frameworks.
+* **Split code to independent blocks.** “Divide and rule” is always good idea.
 * **Blocks communicate by events.** Events is easy and safe method to clean
-  very compilcated dependencies between controls.
+  very complicated dependencies between controls.
 * **Separate JS and CSS.** You use classes only for styles and bind JS
   by selectors with special attributes. So you can update your styles without
-  be afraid of broke your scripts.
+  fear to break your scripts.
 * **Try not to render on client.** 2 way data-binding looks very cool,
   but it has [big price]. Most of web pages (instead of web applications)
   can render all HTML on server and use client rendering only in few small
-  places. And without rendering we can incredibly clean code and architecture.
+  places. Without rendering we can incredibly clean code and architecture.
 
 See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
 
@@ -37,7 +36,7 @@ Slim template:
         form@finishForm action="/tasks/#{ task.id }/finish"
           input type="submit" value="Finish"
 
-  form@createForm action="/tasks/"
+  form@addForm action="/tasks/"
     input type="text"   name="name"
     input type="submit" value="Add"
 ```
@@ -47,32 +46,36 @@ Block’s CoffeeScript:
 ```coffee
 evil.block '@@todo',
 
-  ajaxSubmit: (form) ->
+  ajaxSubmit: (e) ->
+    e.preventDefault()
+
+    form = e.el
     form.addClass('is-loading')
+
     $.ajax
       url:      form.attr('action')
       data:     form.serialize()
       complete: -> form.addClass('is-loading')
 
   'submit on @finishForm': (e) ->
-    e.preventDefault()
-    @ajaxSubmit(e.el).done ->
+    @ajaxSubmit(e).done ->
       e.el.closest("@task").addClass("is-finished")
 
-  'submit on @createForm': (e) ->
+  'submit on @addForm': (e) ->
     e.preventDefault()
-    @ajaxSubmit(e.el).done (newTaskHTML) ->
+    @ajaxSubmit(e).done (newTaskHTML) ->
       @tasks.append(newTaskHTML)
 ```
 
 ## Attributes
 
-If you use classes selectors in CSS and JS, your styles will be bounded
-with scripts. For example, if you change `.button` to `.big-button`, you must
+If you use classes selectors in CSS and JS, your scripts will be depend
+on styles. If you will change `.small-button` to `.big-button`, you must
 change all button’s selectors in scripts.
 
 Separated scripts and styles are better, so Evil Blocks prefer to work with
-two HTML attributes to bind your JS: `data-block` and `data-role`.
+two HTML attributes to bind your JS: `data-block` (to define blocks)
+and `data-role` (to define elements inside block).
 
 ```html
 <div data-block="todo">
@@ -100,7 +103,7 @@ and be sure in scripts:
 .big-button@addButton
 ```
 
-Of cource, Evil Block doesn’t force you to use only this selectors.
+Of course, Evil Block doesn’t force you to use only this selectors.
 You can any attributes, that you like.
 
 ## Blocks
@@ -118,22 +121,22 @@ header@@header
 .docs-page@@docs
 ```
 
-Then you can vitalize your blocks in scripts by `evil.block`:
+Then you can vitalize your blocks in scripts by `evil.block` function:
 
 ```coffee
 evil.block '@@header',
 
   init: ->
-    console.log('Vitaluze', @block)
+    console.log('Vitalize', @block)
 ```
 
-This code says, that when page will be loaded. Evil Blocks should find
-any blocks by `@@header` selector (this is shortcut for `[data-block=header]`)
-and call `init` on every finded block. So, if your page contains two headers,
-`init` will be called twice with different `@block`.
+When page will be loaded Evil Blocks finds blocks by `@@header` selector
+(this is shortcut for `[data-block=header]`) and call `init` on every
+founded block. So, if your page contains two headers, `init` will be called twice
+with different `@block`.
 
 Property `@block` will contain jQuery-node of current block. You can search
-inside current block by `@$(selector)` function:
+inside current block by `@$(selector)` method:
 
 ```coffee
 evil.block '@@docs',
@@ -143,7 +146,7 @@ evil.block '@@docs',
                                    # Same as @block.find('a')
 ```
 
-You can add any methods and properties to block class:
+You can add any methods and properties to your block class:
 
 ```coffee
 evil.block '@@gallery',
@@ -168,12 +171,12 @@ for every element inside block with `data-role` attribute:
 ```coffee
 evil.block '@@todo',
 
-  addTask: (newTaskHTML) ->
-    @tasks.append(newTaskHTML)
+  addTask: (task) ->
+    @tasks.append(task)
 ```
 
-If you add some new HTML by AJAX, you can vitalize new blocks
-with `evil.block.vitalize()`. This function will vitalize only new blocks in
+If you add new HTML by AJAX, you can vitalize new blocks by
+`evil.block.vitalize()`. This function will vitalize only new blocks in
 document.
 
 ```coffee
@@ -192,22 +195,24 @@ evil.block '@@todo',
     # Event listener
 ```
 
-First part will be event names, second part will be selector. So you can use
-more diffult listeners:
+More difficult example:
 
 ```coffee
 evil.block '@@form',
+  ajaxSearch: -> …
 
-  'change, keyup in input, textarea': (event) ->
-    console.log('Change in', event.el)
+  'change, keyup on input, select': (event) ->
+    field = event.el()
+    @ajaxSearch('Changed', field.val())
 ```
 
-First argument in listener will be jQuery Event object. Current element will be
-in `event.el` property. All listeners are delegated on current block,
-so `click on @button` will be equal to `@block.on 'click', '@button', ->`.
+Listener will receive jquery jQuery Event object as first argument.
+Current element (`this` in jQuery listeners) will be in `event.el` property.
+All listeners are delegated on current block, so `click on @button` will be
+equal to `@block.on 'click', '@button', ->`.
 
-You should prevent event default behavior by `event.preventDefault()`,
-`return false` will not do anything in block’s listeners. I recommend to use
+You should prevent default event behavior by `event.preventDefault()`,
+`return false` will not do anything in block’s listeners. I recommend
 [evil-front/links] to prevent default behavior in any links with `href="#"`
 to clean your code.
 
@@ -215,8 +220,8 @@ You can also bind events on body and window:
 
 ```coffee
 evil.blocks '@@docs',
-  recalcMenu: ->
-  openPage: ->
+  recalcMenu: -> …
+  openPage:   -> …
 
   init: ->
     @recalcMenu()
@@ -237,7 +242,7 @@ to block node by `"on events"` method:
 
 ```coffee
 evil.block '@@slideshow', ->
-  nextSlide: ->
+  nextSlide: -> …
 
   'on play': ->
     @timer = setInterval(=> @nextSlide, 5000)
@@ -260,6 +265,7 @@ evil.block '@@callUs', ->
     @phoneNumber.text(city.phone)
 
 evil.block '@@cityChanger', ->
+  getCurrentCity: -> …
 
   'change on @citySelect': ->
     $('body').trigger('change-city', @getCurrentCity())
@@ -267,10 +273,10 @@ evil.block '@@cityChanger', ->
 
 ## Rendering
 
-If you will render on client and on server-side, you must to repeat helpers,
-i18n support, templates. Client rendering require a lot of libraries
-and architecture. 2-way data binding looks cool, but has very [big price] in
-perfomance, templates, animation and overengeniring.
+If you will render on client and on server-side, you must repeat helpers, i18n,
+templates. Client rendering requires a lot of libraries and architecture.
+2-way data binding looks cool, but has very [big price] in performance,
+templates, animation and overengeniring.
 
 If you develop web page (not web application with offline support, etc),
 server-side rendering will be more useful. Users will see your interface
@@ -278,7 +284,7 @@ imminently, search engines will index your content and your code will be much
 simple and clear.
 
 In most of cases you can avoid client rendering. If you need to add some block
-in same case, you can render it to HTML, hide and show in right time:
+by JS, you can render it on server to HTML, hide and show in right time:
 
 ```coffee
 evil.block '@@comment',
@@ -288,25 +294,25 @@ evil.block '@@comment',
 ```
 
 If user change some data and you need to update view, you anyway need to send
-request to server to save new data. Just ask server to render new view.
+request to save new data on server. Just ask server to render new view.
 For example, on new comment server can return new comment HTML:
 
 ```coffee
 evil.block '@@comment',
 
-  'submit on @newCommentForm': ->
-    $.post '/comments', @newCommentForm.serialize(), (newComment) ->
+  'submit on @addCommentForm': ->
+    $.post '/comments', @addCommentForm.serialize(), (newComment) ->
       @comments.append(newComment)
 ```
 
-But, of cource, some cases require client rendering. Evil Blocks only recommend
-to do it server-side, but not force you:
+But, of course, some cases require client rendering. Evil Blocks only recommend
+to do it server-side, but not force you:
 
 ```coffee
 evil.block '@@comment',
 
-  'change, keyup on @newCommentText', ->
-    html = JST['comment'](text: @newCommentText.text())
+  'change, keyup on @commentField', ->
+    html = JST['comment'](text: @commentField.text())
     @preview.html(html)
 ```
 
@@ -315,7 +321,7 @@ evil.block '@@comment',
 ## Modules
 
 If your blocks has same behavior, you can create module-block and set
-two blocks on one tag:
+multiple blocks on same tag:
 
 ```haml
 @popup@@closable
@@ -357,8 +363,8 @@ evil.block '@@docs',
 
 ## Debug
 
-Evil Blocks contains debug extenstion, which log every triggered events inside
-blocks. You should just load `evil-block.debug.js`. For example, in Rails:
+Evil Blocks contains debug extension, which log every events inside blocks.
+To enable it, just load `evil-block.debug.js`. For example, in Rails:
 
 ```haml
 - if Rails.env.development?
@@ -390,7 +396,7 @@ to Sprockets environment:
 EvilBlocks.install(sprockets)
 ```
 
-And change Slim options to support `@data-rule` shortcut:
+And change Slim options to support `@@block` and `@rule` shortcuts:
 
 ```ruby
 EvilBlocks.install_to_slim!
