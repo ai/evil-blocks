@@ -132,8 +132,8 @@ evil.block '@@header',
 
 When page will be loaded Evil Blocks finds blocks by `@@header` selector
 (this is shortcut for `[data-block=header]`) and call `init` on every
-founded block. So, if your page contains two headers, `init` will be called twice
-with different `@block`.
+founded block. So, if your page contains two headers, `init` will be called
+twice with different `@block`.
 
 Property `@block` will contain jQuery-node of current block. You can search
 inside current block by `@$(selector)` method:
@@ -206,13 +206,13 @@ evil.block '@@form',
     @ajaxSearch('Changed', field.val())
 ```
 
-Listener will receive jquery jQuery Event object as first argument.
+Listener will receive jQuery Event object as first argument.
 Current element (`this` in jQuery listeners) will be in `event.el` property.
 All listeners are delegated on current block, so `click on @button` will be
 equal to `@block.on 'click', '@button', ->`.
 
 You should prevent default event behavior by `event.preventDefault()`,
-`return false` will not do anything in block’s listeners. I recommend
+`return false` will not do anything in block’s listeners. I recommend
 [evil-front/links] to prevent default behavior in any links with `href="#"`
 to clean your code.
 
@@ -284,7 +284,7 @@ imminently, search engines will index your content and your code will be much
 simple and clear.
 
 In most of cases you can avoid client rendering. If you need to add some block
-by JS, you can render it on server to HTML, hide and show in right time:
+by JS, you can render it hidden to page HTML and show in right time:
 
 ```coffee
 evil.block '@@comment',
@@ -294,7 +294,7 @@ evil.block '@@comment',
 ```
 
 If user change some data and you need to update view, you anyway need to send
-request to save new data on server. Just ask server to render new view.
+request to save new data on server. Just ask server to render new view.
 For example, on new comment server can return new comment HTML:
 
 ```coffee
