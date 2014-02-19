@@ -183,7 +183,7 @@ describe 'evil.block', ->
       finded = false
       evil.block '.page',
         init: ->
-          finded = @('b').text()
+          finded = @$('b').text()
 
       body '<div class="page"> <b data-role="role">finded</b> </div>'
       finded.should.eql 'finded'
