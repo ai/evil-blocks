@@ -1,4 +1,4 @@
-require_relative '../ruby/evil-blocks-rails'
+require_relative '../lib/evil-blocks-rails'
 
 require 'slim'
 EvilBlocks.install_to_slim!
