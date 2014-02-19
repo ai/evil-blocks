@@ -112,7 +112,7 @@ describe 'evil.block', ->
           prop = @roleName
 
       body '<div class="page"> <b data-role="roleName"/> </div>'
-      prop[0].should.eql $('@roleName')[0]
+      prop.is('@roleName').should.be.true
 
     it 'listens block events', ->
       burning = ''
