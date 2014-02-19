@@ -1,12 +1,16 @@
+require 'pathname'
+
+package = Pathname(__FILE__).dirname.join('package.json').read
+version = package.match(/"version": "([\d\.]+)",/)[1]
+
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'evil-blocks-rails'
-  s.version     = VERSION
+  s.version     = version
   s.summary     = 'Evil Block is a tiny JS framework for web pages ' +
                   'to split your app to separated blocks'
 
-  s.files            = ['lib/assets/javascripts/evil-blocks.debug.js',
-                        'lib/assets/javascripts/evil-blocks.js',
+  s.files            = ['lib/evil-blocks.debug.js', 'lib/evil-blocks.js',
                         'lib/evil-blocks-rails.rb',
                         'LICENSE', 'README.md', 'ChangeLog.md']
   s.extra_rdoc_files = ['LICENSE', 'README.md', 'ChangeLog.md']

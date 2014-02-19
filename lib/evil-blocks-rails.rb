@@ -14,13 +14,13 @@ module EvilBlocks
 
   # Add assets paths to standalone Sprockets environment.
   def self.install(sprockets)
-    sprockets.append_path(Pathname(__FILE__).dirname.join('assets/javascripts'))
+    sprockets.append_path(Pathname(__FILE__).dirname)
   end
 
   if defined? ::Rails
-    # Tell Ruby on Rails to add `evil-block.js` to Rails Admin load paths.
     class Engine < ::Rails::Engine
-      initializer 'evil-front.slim' do
+      initializer 'evil-blocks' do
+        EvilBlocks.install(Rails.application.assets)
         EvilBlocks.install_to_slim! if defined?(Slim::Parser)
       end
     end
