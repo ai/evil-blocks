@@ -22,7 +22,9 @@ project =
       map( (i) -> "test/#{i}" )
 
   libs: ->
-    fs.readdirSync('lib/').sort().reverse().map( (i) -> "lib/#{i}" )
+    fs.readdirSync('lib/').sort().reverse()
+      .map    (i) -> "lib/#{i}"
+      .filter (i) -> i.indexOf('.js') != -1
 
   title: ->
     capitalize = (s) -> s[0].toUpperCase() + s[1..-1]
@@ -38,7 +40,6 @@ mocha =
               <link rel="stylesheet" href="/style.css">
               #system#
               <script>
-                chai.should();
                 mocha.setup({ ui: 'bdd', ignoreLeaks: true });
                 window.onload = function() {
                   mocha.run();
@@ -71,8 +72,8 @@ mocha =
 
   system: ->
     @scripts ['node_modules/jquery/dist/jquery.js',
-              'node_modules/mocha/mocha.js',
-              'node_modules/chai/chai.js']
+              'node_modules/should/should.js',
+              'node_modules/mocha/mocha.js']
 
 task 'server', 'Run test server', ->
   server = http.createServer (req, res) ->
@@ -106,30 +107,15 @@ task 'clean', 'Remove all generated files', ->
   fs.removeSync('build/') if fs.existsSync('build/')
   fs.removeSync('pkg/')   if fs.existsSync('pkg/')
 
-task 'gem', 'Build RubyGem package', ->
-  fs.removeSync('build/') if fs.existsSync('build/')
-  fs.mkdirsSync('build/lib/assets/javascripts/')
+task 'min', 'Create minimized version of library', ->
+  fs.mkdirsSync('pkg/') unless fs.existsSync('pkg/')
+  uglify = require('uglify-js')
 
-  copy = require('fs-extra/lib/copy').copyFileSync
-  gem  = project.name() + '-rails'
-
-  gemspec = fs.readFileSync("#{gem}.gemspec").toString()
-  gemspec = gemspec.replace('VERSION', "'#{project.version()}'")
-  fs.writeFileSync("build/#{gem}.gemspec", gemspec)
-
-  copy("ruby/#{gem}.rb",      "build/lib/#{gem}.rb")
-  copy('README.md',          'build/README.md')
-  copy('ChangeLog',          'build/ChangeLog')
-  copy('LICENSE',            'build/LICENSE')
   for file in project.libs()
-    copy(file, file.replace('lib/', 'build/lib/assets/javascripts/'))
+    name = file.replace(/^lib\//, '').replace(/\.js$/, '')
+    fs.copySync(file, "pkg/#{name}-#{project.version()}.min.js")
 
-  exec "cd build/; gem build #{gem}.gemspec", (error, message) ->
-    if error
-      process.stderr.write(error.message + "\n")
-      process.exit(1)
-    else
-      fs.mkdirsSync('pkg/') unless fs.existsSync('pkg/')
-      gemFile = fs.readdirSync('build/').filter( (i) -> i.match(/\.gem$/) )[0]
-      copy('build/' + gemFile, 'pkg/' + gemFile)
-      fs.removeSync('build/')
+  packages = fs.readdirSync('pkg/').filter( (i) -> i.match(/\.js$/) )
+  for file in packages
+    min = uglify.minify('pkg/' + file)
+    fs.writeFileSync('pkg/' + file, min.code)

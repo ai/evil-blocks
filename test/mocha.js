@@ -1,5 +1,3 @@
-require('chai').should();
-
 jsdom    = require('jsdom')
 window   = jsdom.jsdom().createWindow();
 document = window.document;
