@@ -16,6 +16,13 @@ describe 'evil.block', ->
     $('@roleTest').length.should.eql(1)
     $('@multi').length.should.eql(2)
 
+  it 'adds block alias', ->
+    body '<b data-block="roleTest" />' +
+         '<b data-block="multi one" />' +
+         '<b data-block="multi" />'
+    $('@@roleTest').length.should.eql(1)
+    $('@@multi').length.should.eql(2)
+
   describe '.eventFilter', ->
     originFilter = evil.block.eventFilter
     after -> evil.block.eventFilter = originFilter
