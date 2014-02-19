@@ -1,3 +1,15 @@
+## 0.5 (RDS-1, 29th August 1949)
+* Current event target was moved from first argument to `event.el`.
+* Inside finder was moved from `@(selector)` to `@$(selector)`.
+* Remove old function style API.
+* Add `@@block` alias.
+* Add debugger extension.
+* Vitalize blocks on next tick after page ready.
+* Don’t vitalize blocks twice.
+* Method `evil.block.vitalize()` calls on `document` by default.
+* Allow to use GitHub master in Bundler.
+* Add Bower support.
+
 ## 0.4.2 (Zebra, 14th May 1948)
 * Don’t listen bubbled events as block event.
 * Change license to MIT.
