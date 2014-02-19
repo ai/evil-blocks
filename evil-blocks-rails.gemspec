@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'evil-blocks-rails'
   s.version     = version
-  s.summary     = 'Evil Block is a tiny JS framework for web pages ' +
-                  'to split your app to separated blocks'
+  s.summary     = 'Tiny JS framework for web pages to split your app ' +
+                  'to independent blocks'
 
   s.files            = ['lib/evil-blocks.debug.js', 'lib/evil-blocks.js',
                         'lib/evil-blocks-rails.rb',
