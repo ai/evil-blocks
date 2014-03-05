@@ -2,9 +2,7 @@
   "name": "evil-blocks",
   "version": "0.5.0",
   "homepage": "https://github.com/ai/evil-blocks",
-  "authors": [
-    "Andrey A.I. Sitnik <andrey@sitnik.ru>"
-  ],
+  "authors": ["Andrey A.I. Sitnik <andrey@sitnik.ru>"],
   "description": "Tiny JS framework for web pages to split your app to independent blocks",
   "keywords": "framework blocks events",
   "license": "MIT",
@@ -15,12 +13,12 @@
     "jquery": ">= 1.6.0"
   },
   "ignore": [
-    "evil-blocks-rails.gemspec",
-    "lib/evil-blocks-rails.rb",
     "package.json",
+    "*.gemspec",
     "Cakefile",
     "Gemfile*",
     "test",
+    "*.rb",
     ".*"
   ]
 }
