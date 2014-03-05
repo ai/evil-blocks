@@ -1,3 +1,6 @@
+## 0.5.1
+* Fix block vitalizing, when multiple blocks was binded to same DOM node.
+
 ## 0.5 (RDS-1, 29th August 1949)
 * Current event target was moved from first argument to `event.el`.
 * Inside finder was moved from `@(selector)` to `@$(selector)`.
