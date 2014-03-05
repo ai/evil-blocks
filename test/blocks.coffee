@@ -112,6 +112,21 @@ describe 'evil.block', ->
       evil.block.vitalize fixtures
       called.should.be.eql(2)
 
+    it 'works with multiple blocks on same node', ->
+      called = ''
+      evil.block '.page',
+        init: ->
+          called += '1'
+      evil.block '.page',
+        init: ->
+          called += '2'
+
+      body '<b class="page" />'
+      called.should.be.eql('12')
+
+      evil.block.vitalize fixtures
+      called.should.be.eql('12')
+
     it 'creates properties for each role', ->
       prop = false
       evil.block '.page',
