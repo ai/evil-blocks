@@ -1,9 +1,8 @@
-fs     = require('fs-extra')
-url    = require('url')
-exec   = require('child_process').exec
-http   = require('http')
-path   = require('path')
-coffee = require('coffee-script')
+fs   = require('fs-extra')
+url  = require('url')
+exec = require('child_process').exec
+http = require('http')
+path = require('path')
 
 project =
 
@@ -17,14 +16,14 @@ project =
     @package().version
 
   tests: ->
-    fs.readdirSync('test/').
-      filter( (i) -> i.match /\.coffee$/ ).
-      map( (i) -> "test/#{i}" )
+    fs.readdirSync('test/')
+      .filter (i) -> i.match /\.coffee$/
+      .map    (i) -> "test/#{i}"
 
   libs: ->
     fs.readdirSync('lib/').sort().reverse()
-      .map    (i) -> "lib/#{i}"
       .filter (i) -> i.indexOf('.js') != -1
+      .map    (i) -> "lib/#{i}"
 
   title: ->
     capitalize = (s) -> s[0].toUpperCase() + s[1..-1]
@@ -76,6 +75,8 @@ mocha =
               'node_modules/mocha/mocha.js']
 
 task 'server', 'Run test server', ->
+  coffee = require('coffee-script')
+
   server = http.createServer (req, res) ->
     pathname = url.parse(req.url).pathname
 
@@ -104,15 +105,15 @@ task 'server', 'Run test server', ->
   process.stdout.write("Open http://localhost:8000/\n")
 
 task 'clean', 'Remove all generated files', ->
-  fs.removeSync('build/') if fs.existsSync('build/')
-  fs.removeSync('pkg/')   if fs.existsSync('pkg/')
-
+  fs.removeSync('pkg/') if fs.existsSync('pkg/')
   for file in fs.readdirSync('./')
     fs.removeSync(file) if file.match(/\.gem$/)
 
 task 'min', 'Create minimized version of library', ->
-  fs.mkdirsSync('pkg/') unless fs.existsSync('pkg/')
   uglify = require('uglify-js')
+
+  invoke('clean')
+  fs.mkdirsSync('pkg/')
 
   for file in project.libs()
     name = file.replace(/^lib\//, '').replace(/\.js$/, '')
