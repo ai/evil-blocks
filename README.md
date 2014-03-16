@@ -390,6 +390,9 @@ Load `evil-blocks.js` in your script:
 //= require evil-blocks
 ```
 
+If you use Rails 3 on Heroku, you may need
+[some hack](https://github.com/ai/evil-blocks/issues/17).
+
 ### Ruby
 
 If you use Sinatra or other non-Rails framework you can add Evil Blocks path
