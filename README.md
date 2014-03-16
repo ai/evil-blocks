@@ -85,7 +85,8 @@ and `data-role` (to define elements inside block).
 ```
 
 Evil Blocks extends Slim and jQuery, so you can use shortcuts for this
-attributes: `@@block` and `@role`:
+attributes: `@@block` and `@role`. For Haml you can use [Role Block Haml] gem
+to use same shortcuts.
 
 ```haml
 @@todo
@@ -105,6 +106,8 @@ and be sure in scripts:
 
 Of course, Evil Block doesn’t force you to use only this selectors.
 You can any attributes, that you like.
+
+[Role Block Haml]: https://github.com/vladson/role_block_haml
 
 ## Blocks
 
