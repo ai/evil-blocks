@@ -136,6 +136,31 @@ describe 'evil.block', ->
       body '<div class="page"> <b data-role="roleName"/> </div>'
       prop.is('@roleName').should.be.true
 
+
+    it 'creates props object for block', ->
+      body """
+        <div class="page" data-foo="a" data-bar="b"></div>
+      """
+      data = null
+      evil.block '.page',
+        init: ->
+          data = @block.props
+      data.should.eql {foo: "a", bar: "b"}
+
+
+    it 'creates props object for elements', ->
+      body """
+        <div class="page">
+          <div data-role="element" data-foo="a" data-bar="b"></div>
+        </div>
+      """
+      data = null
+      evil.block '.page',
+        init: ->
+          data = @element.props
+      data.should.eql {foo: "a", bar: "b"}
+
+
     it 'listens block events', ->
       burning = ''
       evil.block '.page',
