@@ -244,7 +244,7 @@ Blocks should communicates by custom jQuery events. You can bind event listener
 to block node by `"on events"` method:
 
 ```coffee
-evil.block '@@slideshow', ->
+evil.block '@@slideshow',
   nextSlide: -> …
 
   'on play': ->
@@ -253,7 +253,7 @@ evil.block '@@slideshow', ->
   'on stop': ->
     clearInterval(@timer)
 
-evil.block '@@video', ->
+evil.block '@@video',
 
   'click on @fullscreenButton': ->
     $('@@slideshow').trigger('stop')
@@ -262,12 +262,12 @@ evil.block '@@video', ->
 If you want to use broadcast messages, you can use custom events on body:
 
 ```coffee
-evil.block '@@callUs', ->
+evil.block '@@callUs',
 
   'change-city on body': (e, city) ->
     @phoneNumber.text(city.phone)
 
-evil.block '@@cityChanger', ->
+evil.block '@@cityChanger',
   getCurrentCity: -> …
 
   'change on @citySelect': ->
@@ -332,12 +332,12 @@ multiple blocks on same tag:
 ```
 
 ```coffee
-evil.block '@@closable', ->
+evil.block '@@closable',
 
   'click on @closeLink': ->
     @block.trigger('close')
 
-evil.block '@@popup', ->
+evil.block '@@popup',
 
   'on close': ->
     @clock.removeClass('is-open')
