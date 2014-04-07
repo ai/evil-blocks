@@ -367,11 +367,11 @@ evil.block '@@docs',
 ## Debug
 
 Evil Blocks contains debug extension, which log every events inside blocks.
-To enable it, just load `evil-block.debug.js`. For example, in Rails:
+To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ```haml
 - if Rails.env.development?
-  = javascript_include_tag 'evil-block.debug'
+  = javascript_include_tag 'evil-blocks.debug'
 ```
 
 ## Install
