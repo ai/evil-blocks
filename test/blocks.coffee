@@ -7,7 +7,7 @@ describe 'evil.block', ->
 
   afterEach ->
     fixtures.html('')
-    evil.block.vitalizers = []
+    evil.block.defined = []
 
   it 'adds role alias', ->
     body '<b data-role="roleTest" />' +
@@ -22,23 +22,6 @@ describe 'evil.block', ->
          '<b data-block="multi" />'
     $('@@roleTest').length.should.eql(1)
     $('@@multi').length.should.eql(2)
-
-  describe '.eventFilter', ->
-    originFilter = evil.block.eventFilter
-    after -> evil.block.eventFilter = originFilter
-
-    it 'filters blocks events', ->
-      fired = []
-      evil.block.eventFilter = (callback, block, event) ->
-        block.block.is('.a').should.be.true
-        fired.push event
-        callback
-
-      evil.block '.a',
-        'on fire': ->
-      body '<div class="a" />'
-
-      fired.should.eql ['on fire']
 
   describe '.vitalize()', ->
 
@@ -108,7 +91,7 @@ describe 'evil.block', ->
       evil.block.vitalize fixtures
       called.should.be.eql(1)
 
-      fixtures.append('<b class="page" />')
+      fixtures.append('<a class="page" />')
       evil.block.vitalize fixtures
       called.should.be.eql(2)
 
