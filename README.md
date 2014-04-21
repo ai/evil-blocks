@@ -321,6 +321,67 @@ evil.block '@@comment',
 
 [big price]: http://staal.io/blog/2014/02/05/2-way-data-binding-under-the-microscope/
 
+## Debug
+
+Evil Blocks contains debug extension, which log every events inside blocks.
+To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
+
+```haml
+- if Rails.env.development?
+  = javascript_include_tag 'evil-blocks.debug'
+```
+
+## Extensions
+
+Evil Block core only find blocks by selectors, set `@block` property
+and call `init` method. Any others features like event bindings
+and `@$()` method is created by filters.
+
+Before calling `init`, Evil Blocks process object throw the filters from
+`evil.block.filters`. Filter accept object as first argument and unique class ID
+as second. It can check some properties in object (like contains ` on `),
+go some logic (for example, bind events on `obj.block`), add/remove some
+properties from object. If filter will return `false`, Evil Block will stop
+block vitalizing and will not call `init` method.
+
+Default filters:
+
+1. **Don’t vitalize same DON node twice.** Filter just return `false` if block
+   ws already initialized with this class ID.
+2. **Add `@$()` method`. Just add shortcut method to object.
+3. **Add properties for all childs with `data-role` attribute**.
+4. **Bind block events**. Find, bind listeners and remove all methods with
+   `on EVENT` name.
+5. **Bind window and body events**. Find, bind listeners and remove all methods
+   with `EVENT on window` or `EVENT on body` name.
+6. **Bind elements events**. Find, bind listeners and remove all methods
+   with `EVENT on CHILD` name.
+
+You can add you own filter to `evil.block.filters`. Most filters should be added
+after first filter to not been called on already initialized blocks.
+
+Let’s write filter, which will initialize blocks only when they become to be
+visible.
+
+```coffee
+filter = (obj) ->
+  if not obj.block.is(':visible')
+    # Check for visibility every 100 ms
+    # and recall vitalizing if block become visible
+    checking = ->
+      evil.block.vitalize(obj.block) if obj.block.is(':visible')
+    setTimeout(checking, 100);
+
+    # Disable block initializing
+    return false
+
+# Add filter to list
+evil.block.filters.splice(0, 0, filter)
+```
+
+With filters you can change Evil Blocks logic, add some new shortcuts or
+features like mixins.
+
 ## Modules
 
 If your blocks has same behavior, you can create module-block and set
@@ -362,16 +423,6 @@ evil.block '@@docs',
 
   'click on @showExampleButton': ->
     @openInFancybox(@example)
-```
-
-## Debug
-
-Evil Blocks contains debug extension, which log every events inside blocks.
-To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
-
-```haml
-- if Rails.env.development?
-  = javascript_include_tag 'evil-blocks.debug'
 ```
 
 ## Install
