@@ -236,6 +236,8 @@ evil.blocks '@@docs',
     @openPage(location.hash)
 ```
 
+Listener `load on window` will execute immediately, if window is already loaded.
+
 [evil-front/links]: https://github.com/ai/evil-front/blob/master/evil-front/lib/assets/javascripts/evil-front/links.js
 
 ## Blocks Communications
@@ -347,14 +349,16 @@ Default filters:
 
 1. **Don’t vitalize same DOM node twice.** It return `false` if block
    was already initialized with this class ID.
-2. **Add `@$()` method**. It add shortcut method to object.
-3. **Add shortcuts to `@element`** It add properties for all children with
+2. **Add `@$()` method.** It add shortcut method to object.
+3. **Add shortcuts to `@element`.** It add properties for all children with
    `data-role` attribute.
-4. **Bind block events**. Find, bind listeners and remove all methods with
+4. **Bind block events.** Find, bind listeners and remove all methods with
    name like `on event`.
-5. **Bind window and body events**. Find, bind listeners and remove all methods
+5. **Smarter window load listener.** Run `load on window` listener immediately,
+   if window is already loaded.
+6. **Bind window and body events.** Find, bind listeners and remove all methods
    with name like `event on window` or `event on body`.
-6. **Bind elements events**. Find, bind listeners and remove all methods
+7. **Bind elements events.** Find, bind listeners and remove all methods
    with name like `event on child`.
 
 You can add you own filter to `evil.block.filters`. Most filters should be added
