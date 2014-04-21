@@ -334,7 +334,7 @@ To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 ## Extensions
 
 Evil Blocks core only find blocks by selectors, set `@block` property
-and call `init` method. Any others features like event bindings
+and call `init` method. Any others features like event bindings
 and `@$()` method will be created by filters.
 
 Before calling `init`, Evil Blocks process object throw the filters from
@@ -353,12 +353,12 @@ Default filters:
 4. **Bind block events**. Find, bind listeners and remove all methods with
    name like `on event`.
 5. **Bind window and body events**. Find, bind listeners and remove all methods
-   with name like `event on window` or `event on body`.
+   with name like `event on window` or `event on body`.
 6. **Bind elements events**. Find, bind listeners and remove all methods
-   with name like `event on CHILD`.
+   with name like `event on child`.
 
 You can add you own filter to `evil.block.filters`. Most filters should be added
-after first filter to not been called on already initialized blocks.
+after first filter to not been called on already initialized blocks.
 
 Let’s write filter, which will initialize blocks only when they become to be
 visible.
