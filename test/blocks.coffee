@@ -184,6 +184,18 @@ describe 'evil.block', ->
       $(window).trigger('fire', '1')
       burning.should.eql '1'
 
+    it 'fires event immedently if page already loaded', (done) ->
+      burning = false
+      evil.block '.page',
+        'load on window': ->
+          burning = true
+
+      body '<div class="page"></div>'
+      setTimeout( ->
+        burning.should.be.true
+        done()
+      , 10)
+
     it 'finds inside', ->
       finded = false
       evil.block '.page',
