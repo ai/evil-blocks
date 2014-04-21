@@ -348,7 +348,7 @@ Default filters:
 1. **Don’t vitalize same DOM node twice.** It return `false` if block
    was already initialized with this class ID.
 2. **Add `@$()` method**. It add shortcut method to object.
-3. **Add shortcuts to `@element`** It add properties for all child with
+3. **Add shortcuts to `@element`** It add properties for all children with
    `data-role` attribute.
 4. **Bind block events**. Find, bind listeners and remove all methods with
    name like `on event`.
@@ -381,6 +381,11 @@ evil.block.filters.splice(0, 0, filter)
 
 With filters you can change Evil Blocks logic, add some new shortcuts or
 features like mixins.
+
+Also you can remove any default filters from `evil.block.filters` (for example,
+you can create properties for `data-role` children from some white list).
+
+But Filters API is still unstable and you should be careful on major updates.
 
 ## Modules
 
