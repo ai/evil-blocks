@@ -333,29 +333,29 @@ To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ## Extensions
 
-Evil Block core only find blocks by selectors, set `@block` property
+Evil Blocks core only find blocks by selectors, set `@block` property
 and call `init` method. Any others features like event bindings
-and `@$()` method is created by filters.
+and `@$()` method will be created by filters.
 
 Before calling `init`, Evil Blocks process object throw the filters from
 `evil.block.filters`. Filter accept object as first argument and unique class ID
-as second. It can check some properties in object (like contains ` on `),
-go some logic (for example, bind events on `obj.block`), add/remove some
-properties from object. If filter will return `false`, Evil Block will stop
-block vitalizing and will not call `init` method.
+as second. It can find some properties in object, work with block DOM nodes and
+add/remove some properties from object. If filter will return `false`,
+Evil Blocks will stop block vitalizing and will not call `init` method.
 
 Default filters:
 
-1. **Don’t vitalize same DON node twice.** Filter just return `false` if block
-   ws already initialized with this class ID.
-2. **Add `@$()` method`. Just add shortcut method to object.
-3. **Add properties for all childs with `data-role` attribute**.
+1. **Don’t vitalize same DOM node twice.** It return `false` if block
+   was already initialized with this class ID.
+2. **Add `@$()` method**. It add shortcut method to object.
+3. **Add shortcuts to `@element`** It add properties for all child with
+   `data-role` attribute.
 4. **Bind block events**. Find, bind listeners and remove all methods with
-   `on EVENT` name.
+   name like `on event`.
 5. **Bind window and body events**. Find, bind listeners and remove all methods
-   with `EVENT on window` or `EVENT on body` name.
+   with name like `event on window` or `event on body`.
 6. **Bind elements events**. Find, bind listeners and remove all methods
-   with `EVENT on CHILD` name.
+   with name like `event on CHILD`.
 
 You can add you own filter to `evil.block.filters`. Most filters should be added
 after first filter to not been called on already initialized blocks.
