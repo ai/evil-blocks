@@ -124,6 +124,8 @@ describe 'evil.block', ->
       evil.block '.page',
         'on fire burn': (e, param) ->
           burning += ' ' + e.type + ' ' + param
+        'on ice': ->
+          burning += ' ice'
 
       body '<div class="page"></div>'
       $('.page').trigger('fire', '1').trigger('burn', '2')
@@ -144,6 +146,8 @@ describe 'evil.block', ->
       evil.block '.page',
         'fire burn on @a, @b': (e, param) ->
           burning += ' ' + e.el.data('role') + ' ' + param
+        'ice on @a': ->
+          burning += ' ice'
 
       body """
         <div class="page">
@@ -159,6 +163,8 @@ describe 'evil.block', ->
       evil.block '.page',
         'fire on body': (e, param) ->
           burning = param
+        'ice on body': ->
+          burning += 'ice'
 
       body '<div class="page"></div>'
       $('body').trigger('fire', '1')
