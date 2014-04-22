@@ -235,3 +235,15 @@ describe 'evil.block', ->
 
       body '<div class="a" /><div class="b" />'
       events.should.eql ['b', 'a']
+
+    it 'prevents to override properties by elements', ->
+      value = null
+      evil.block '.page',
+        one: 1
+        'on fire': ->
+          value = @one
+
+      body '<div class="page"><b data-role="one"/></div>'
+
+      $('.page').trigger('fire')
+      value.should.eql(1)
