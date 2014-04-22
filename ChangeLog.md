@@ -1,3 +1,8 @@
+## 0.6 (Ranger Able, 27th January 1951)
+* Add filters, which process block object before init was called.
+* Most build-in features was moved to filter to be disableable.
+* Listener `load on window` will call immediately, if page was already loaded.
+
 ## 0.5.1
 * Fix block vitalizing, when multiple blocks was binded to same DOM node.
 
