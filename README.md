@@ -335,21 +335,21 @@ To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ## Extensions
 
-Evil Blocks core only find blocks by selectors, set `@block` property
-and call `init` method. Any others features like event bindings
-and `@$()` method will be created by filters.
+Evil Blocks has tiny core. It only finds blocks by selectors, sets `@block`
+property and calls `init` method. Any others features (like event bindings
+or `@$()` method) was created by filters and can be disabled or replaced.
 
-Before calling `init`, Evil Blocks process object throw the filters from
-`evil.block.filters`. Filter accept object as first argument and unique class ID
-as second. It can find some properties in object, work with block DOM nodes and
-add/remove some properties from object. If filter will return `false`,
+Before calling `init`, Evil Blocks processes object throw the filters list in
+`evil.block.filters`. Filter accepts object as first argument and unique
+class ID as second. It can find some properties in object, work with block
+DOM nodes and add/remove some object properties. If filter will return `false`,
 Evil Blocks will stop block vitalizing and will not call `init` method.
 
 Default filters:
 
 1. **Don’t vitalize same DOM node twice.** It return `false` if block
    was already initialized with this class ID.
-2. **Add `@$()` method.** It add shortcut method to object.
+2. **Add `@$()` method.** It add shortcut find method to object.
 3. **Add shortcuts to `@element`.** It add properties for all children with
    `data-role` attribute.
 4. **Bind block events.** Find, bind listeners and remove all methods with
@@ -386,8 +386,8 @@ evil.block.filters.splice(0, 0, filter)
 With filters you can change Evil Blocks logic, add some new shortcuts or
 features like mixins.
 
-Also you can remove any default filters from `evil.block.filters` (for example,
-you can create properties for `data-role` children from some white list).
+Also you can remove any default filters from `evil.block.filters`. For example,
+you can create properties for `data-role` children only from some white list.
 
 But Filters API is still unstable and you should be careful on major updates.
 
