@@ -71,10 +71,10 @@ evil.block '@@todo',
 
 If you use classes selectors in CSS and JS, your scripts will be depend
 on styles. If you change `.small-button` to `.big-button`, you must
-change all the button’s selectors in scripts.
+change all the button’s selectors in scripts.
 
 Separated scripts and styles are better, so Evil Blocks prefers to work with
-two HTML attributes to bind your JS: `data-block` (to define blocks)
+two HTML attributes to bind your JS: `data-block` (to define blocks)
 and `data-role` (to define elements inside block).
 
 ```html
@@ -85,8 +85,8 @@ and `data-role` (to define elements inside block).
 ```
 
 Evil Blocks extends Slim and jQuery, so you can use shortcuts for these
-attributes: `@@block` and `@role`. For Haml you can use [Role Block Haml] gem
-to use the same shortcuts.
+attributes: `@@block` and `@role`. For Haml you can use [Role Block Haml] gem
+to use the same shortcuts.
 
 ```haml
 @@todo
@@ -135,7 +135,7 @@ evil.block '@@header',
 
 When a page was loaded Evil Blocks finds blocks by `@@header` selector
 (this is a shortcut for `[data-block=header]`) and calls `init` on every
-founded block. So, if your page contains two headers, `init` will be called
+founded block. So, if your page contains two headers, `init` will be called
 twice with different `@block`’s.
 
 The `@block` property will contain a jQuery node of current block.
@@ -244,7 +244,7 @@ Listener `load on window` will execute immediately, if window is already loaded.
 ## Blocks Communications
 
 Blocks should communicate via custom jQuery events. You can bind an event
-listener to a block node with `on events` method:
+listener to a block node with `on events` method:
 
 ```coffee
 evil.block '@@slideshow',
@@ -279,7 +279,7 @@ evil.block '@@cityChanger',
 
 ## Rendering
 
-If you render on the client and on the server-side, you must repeat helpers,
+If you render on the client and on the server-side, you must repeat helpers,
 i18n, templates. Client rendering requires a lot of libraries and architecture.
 2-way data binding looks cool, but has a very [big price] in performance,
 templates, animation and overengeniring.
@@ -299,8 +299,8 @@ evil.block '@@comment',
     @newCommentForm.slideDown()
 ```
 
-If a user changes some data and you need to update the view, you anyway need
-to send a request to save the new data on a server. Just ask the server
+If a user changes some data and you need to update the view, you anyway need
+to send a request to save the new data on a server. Just ask the server
 to render a new view. For example, on a new comment server can return
 new comment HTML:
 
@@ -313,7 +313,7 @@ evil.block '@@comment',
 ```
 
 But, of course, some cases require client-side rendering. Evil Blocks only
-recommends to do it on the server side, but not force you:
+recommends to do it on the server side, but not force you:
 
 ```coffee
 evil.block '@@comment',
@@ -327,7 +327,7 @@ evil.block '@@comment',
 
 ## Debug
 
-Evil Blocks contains a debug extension, which logs all the events inside blocks.
+Evil Blocks contains a debug extension, which logs all the events inside blocks.
 To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ```haml
@@ -338,16 +338,16 @@ To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 ## Extensions
 
 Evil Blocks has a tiny core. It only finds blocks via selectors,
-sets the `@block` property and calls the `init` method. Any other features
+sets the `@block` property and calls the `init` method. Any other features
 (like event bindings or `@$()` method) are created by filters
 and can be disabled or replaced.
 
-Before calling `init`, Evil Blocks processes an object through the filters list
+Before calling `init`, Evil Blocks processes an object through the filters list
 in `evil.block.filters`. A filter accepts an object as its first argument and
-an unique class ID as the second. It can find some properties inside of
-the object, work with block DOM nodes and add/remove some object properties.
+an unique class ID as the second. It can find some properties inside of
+the object, work with block DOM nodes and add/remove some object properties.
 If filter returns `false`, Evil Blocks will stop block vitalizing
-and will not call the `init` method.
+and will not call the `init` method.
 
 Default filters:
 
@@ -356,13 +356,13 @@ Default filters:
 2. **Add `@$()` method.** It adds a shortcut find method to an object.
 3. **Add shortcuts to `@element`.** It adds properties for all children with
    `data-role` attribute.
-4. **Bind block events.** Find, bind listeners and remove all the methods with
+4. **Bind block events.** Find, bind listeners and remove all the methods with
    a name like `on event`.
 5. **Smarter window load listener.** Run `load on window` listener immediately,
    if window is already loaded.
 6. **Bind window and body events.** Find, bind listeners and remove all
    the methods with a name like `event on window` or `event on body`.
-7. **Bind elements events.** Find, bind listeners and remove all the methods
+7. **Bind elements events.** Find, bind listeners and remove all the methods
    with a name like `event on child`.
 
 You can add you own filter to `evil.block.filters`. Most filters should be added
@@ -387,7 +387,7 @@ filter = (obj) ->
 evil.block.filters.splice(0, 0, filter)
 ```
 
-With the filters you can change Evil Blocks logic, add some new shortcuts
+With the filters you can change Evil Blocks logic, add some new shortcuts
 or features like mixins.
 
 Also you can remove any default filters from `evil.block.filters`. For example,
@@ -398,7 +398,7 @@ But Filters API is still unstable and you should be careful on major updates.
 ## Modules
 
 If your blocks have same behavior, you can create a module-block
-and set multiple blocks on the same tag:
+and set multiple blocks on the same tag:
 
 ```haml
 @popup@@closable
