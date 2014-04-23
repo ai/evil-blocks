@@ -13,7 +13,7 @@ Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
   can render all HTML on server and use client rendering only in few small
   places. Without rendering we can incredibly clean code and architecture.
 
-See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
+See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
 
 Sponsored by [Evil Martians]. Role aliases were taken from [Role.js].
 
@@ -73,7 +73,7 @@ If you use classes selectors in CSS and JS, your scripts will be depend
 on styles. If you change `.small-button` to `.big-button`, you must
 change all the button’s selectors in scripts.
 
-Separated scripts and styles are better, so Evil Blocks prefers to work with
+Separated scripts and styles are better, so Evil Blocks prefers to work with
 two HTML attributes to bind your JS: `data-block` (to define blocks)
 and `data-role` (to define elements inside block).
 
@@ -84,7 +84,7 @@ and `data-role` (to define elements inside block).
 </div>
 ```
 
-Evil Blocks extends Slim and jQuery, so you can use shortcuts for these
+Evil Blocks extends Slim and jQuery, so you can use shortcuts for these
 attributes: `@@block` and `@role`. For Haml you can use [Role Block Haml] gem
 to use the same shortcuts.
 
@@ -133,7 +133,7 @@ evil.block '@@header',
     console.log('Vitalize', @block)
 ```
 
-When a page was loaded Evil Blocks finds blocks by `@@header` selector
+When a page was loaded Evil Blocks finds blocks by `@@header` selector
 (this is a shortcut for `[data-block=header]`) and calls `init` on every
 founded block. So, if your page contains two headers, `init` will be called
 twice with different `@block`’s.
@@ -163,7 +163,7 @@ evil.block '@@gallery',
     @showPhoto(@current)
 ```
 
-Evil Blocks will automatically create properties with jQuery nodes
+Evil Blocks will automatically create properties with jQuery nodes
 for every element inside of a block with `data-role` attribute:
 
 ```haml
@@ -179,7 +179,7 @@ evil.block '@@todo',
 ```
 
 If you add new HTML with AJAX, you can vitalize new blocks with
-`evil.block.vitalize()`. This function will vitalize only new blocks in
+`evil.block.vitalize()`. This function will vitalize only new blocks in
 a document.
 
 ```coffee
@@ -213,7 +213,7 @@ evil.block '@@form',
 Listener will receive a jQuery Event object as the first argument.
 Current element (`this` in jQuery listeners) will be contained in `event.el`
 property. All listeners are delegated on current block, so `click on @button`
-is equal to `@block.on 'click', '@button', ->`.
+is equal to `@block.on 'click', '@button', ->`.
 
 You should prevent default event behavior with `event.preventDefault()`,
 `return false` will not do anything in block’s listeners. I recommend
@@ -290,7 +290,7 @@ imminently, search engines will index your content and your code will be much
 simple and clear.
 
 In most of cases you can avoid client-side rendering. If you need to add a block
-with JS, you can render it hidden to page HTML and show it in right time:
+with JS, you can render it hidden to page HTML and show it in right time:
 
 ```coffee
 evil.block '@@comment',
@@ -312,7 +312,7 @@ evil.block '@@comment',
       @comments.append(newComment)
 ```
 
-But, of course, some cases require client-side rendering. Evil Blocks only
+But, of course, some cases require client-side rendering. Evil Blocks only
 recommends to do it on the server side, but not force you:
 
 ```coffee
@@ -327,7 +327,7 @@ evil.block '@@comment',
 
 ## Debug
 
-Evil Blocks contains a debug extension, which logs all the events inside blocks.
+Evil Blocks contains a debug extension, which logs all the events inside blocks.
 To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ```haml
@@ -337,16 +337,16 @@ To enable it, just load `evil-blocks.debug.js`. For example, in Rails:
 
 ## Extensions
 
-Evil Blocks has a tiny core. It only finds blocks via selectors,
+Evil Blocks has a tiny core. It only finds blocks via selectors,
 sets the `@block` property and calls the `init` method. Any other features
-(like event bindings or `@$()` method) are created by filters
-and can be disabled or replaced.
+(like event bindings or `@$()` method) are created by filters
+and can be disabled or replaced.
 
-Before calling `init`, Evil Blocks processes an object through the filters list
+Before calling `init`, Evil Blocks processes an object through the filters list
 in `evil.block.filters`. A filter accepts an object as its first argument and
 an unique class ID as the second. It can find some properties inside of
 the object, work with block DOM nodes and add/remove some object properties.
-If filter returns `false`, Evil Blocks will stop block vitalizing
+If filter returns `false`, Evil Blocks will stop block vitalizing
 and will not call the `init` method.
 
 Default filters:
@@ -361,7 +361,7 @@ Default filters:
 5. **Smarter window load listener.** Run `load on window` listener immediately,
    if window is already loaded.
 6. **Bind window and body events.** Find, bind listeners and remove all
-   the methods with a name like `event on window` or `event on body`.
+   the methods with a name like `event on window` or `event on body`.
 7. **Bind elements events.** Find, bind listeners and remove all the methods
    with a name like `event on child`.
 
@@ -387,7 +387,7 @@ filter = (obj) ->
 evil.block.filters.splice(0, 0, filter)
 ```
 
-With the filters you can change Evil Blocks logic, add some new shortcuts
+With the filters you can change Evil Blocks logic, add some new shortcuts
 or features like mixins.
 
 Also you can remove any default filters from `evil.block.filters`. For example,
@@ -459,7 +459,7 @@ If you use Rails 3 on Heroku, you may need
 
 ### Ruby
 
-If you use Sinatra or other non-Rails framework you can add Evil Blocks path
+If you use Sinatra or other non-Rails framework you can add Evil Blocks path
 to Sprockets environment:
 
 ```ruby
