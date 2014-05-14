@@ -1,3 +1,6 @@
+## 0.6.1
+* Fix debugger scope (by Andrey Krivko)
+
 ## 0.6 (Ranger Able, 27th January 1951)
 * Add filters, which process block object before init was called.
 * Most build-in features was moved to filter to be disableable.
