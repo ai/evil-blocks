@@ -1,12 +1,12 @@
 # Evil Blocks
 
-<img align="right" width="100" height="82" src="http://ai.github.io/evil-blocks/logo.svg" title="Evil Blocks logo by Roman Shamin">
+<img align="right" width="120" height="99" src="http://ai.github.io/evil-blocks/logo.svg" title="Evil Blocks logo by Roman Shamin">
 
 Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
 
 * **Split code to independent blocks.** “Divide and rule” is always good idea.
 * **Blocks communicate by events.** Events is an easy and safe method
-  to clean very complicated dependencies between controls.
+  to clean very complicated dependencies between controls.
 * **Separate JS and CSS.** You should use classes only for styles and bind JS
   by selectors with special attributes. So you can update your styles without
   fear to break your scripts.
