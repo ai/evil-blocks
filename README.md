@@ -1,5 +1,7 @@
 # Evil Blocks
 
+<img align="right" width="100" height="82" src="//ai.github.io/evil-blocks/logo.svg" title="Evil Blocks logo by Roman Shamin">
+
 Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
 
 * **Split code to independent blocks.** “Divide and rule” is always good idea.
