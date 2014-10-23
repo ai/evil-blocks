@@ -59,7 +59,7 @@ evil.block '@@todo',
     $.ajax
       url:      form.attr('action')
       data:     form.serialize()
-      complete: -> form.addClass('is-loading')
+      complete: -> form.removeClass('is-loading')
 
   'submit on @finishForm': (e) ->
     @ajaxSubmit(e).done ->
