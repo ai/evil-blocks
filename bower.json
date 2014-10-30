@@ -4,7 +4,7 @@
   "homepage": "https://github.com/ai/evil-blocks",
   "authors": ["Andrey A.I. Sitnik <andrey@sitnik.ru>"],
   "description": "Tiny JS framework for web pages to split your app to independent blocks",
-  "keywords": "framework blocks events",
+  "keywords": ["framework", "blocks", "events"],
   "license": "MIT",
   "main": [
     "lib/evil-blocks.js"
