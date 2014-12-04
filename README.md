@@ -1,4 +1,4 @@
-# Evil Blocks [![Build Status](https://travis-ci.org/ai/evil-blocks.png)](https://travis-ci.org/ai/evil-blocks)
+# Evil Blocks [![Build Status](https://travis-ci.org/ai/evil-blocks.svg)](https://travis-ci.org/ai/evil-blocks)
 
 <img align="right" width="140" height="115" src="http://ai.github.io/evil-blocks/logo.svg" title="Evil Blocks logo by Roman Shamin">
 
