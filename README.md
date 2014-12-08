@@ -418,7 +418,7 @@ evil.block '@@closable',
 evil.block '@@popup',
 
   'on close': ->
-    @clock.removeClass('is-open')
+    @block.removeClass('is-open')
 ```
 
 If you want to use same methods inside of multiple block, you can create
