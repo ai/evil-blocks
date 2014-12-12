@@ -19,7 +19,7 @@ See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
 
 Role aliases were taken from [Role.js]. Based on Pieces.js by [@chrome].
 
-<a href="https://evilmartians.com/?utm_source=rails-sass-images">
+<a href="https://evilmartians.com/?utm_source=evil-blocks">
 <img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Sponsored by Evil Martians" width="236" height="54">
 </a>
 
