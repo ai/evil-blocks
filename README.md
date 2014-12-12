@@ -17,8 +17,11 @@ Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
 
 See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
 
-Sponsored by [Evil Martians]. Role aliases were taken from [Role.js].
-Based on Pieces.js by [@chrome].
+Role aliases were taken from [Role.js]. Based on Pieces.js by [@chrome].
+
+<a href="https://evilmartians.com/?utm_source=rails-sass-images">
+<img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Sponsored by Evil Martians" width="236" height="54">
+</a>
 
 [Role.js]:       https://github.com/kossnocorp/role
 [big price]:     http://staal.io/blog/2014/02/05/2-way-data-binding-under-the-microscope/
