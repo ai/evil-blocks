@@ -5,6 +5,8 @@ global.document.implementation.createHTMLDocument = function (html, url) {
     return jsdom.html(html);
 };
 
+global.location = { href: '' };
+
 $ = jQuery = require('jquery');
 
 $('body').html('<div id="fixtures"></div>');
