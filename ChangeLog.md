@@ -1,3 +1,6 @@
+# 0.6.3
+* Add Slim 3.0 support.
+
 # 0.6.2
 * Fix IE 8 support (by Dmitry Klimensky).
 * Fix event name in debugger (by Andrey Krivko).
