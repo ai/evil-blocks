@@ -5,11 +5,11 @@ module EvilBlocks
     #
     # Copy from role-rails by Sasha Koss.
     # https://github.com/kossnocorp/role-rails
-    shortcut = Slim::Parser.default_options[:shortcut]
+    shortcut = Slim::Parser.options[:shortcut]
     shortcut['@']  = { attr: 'data-role' }
     shortcut['@@'] = { attr: 'data-block' }
-    Slim::Engine.default_options[:merge_attrs]['data-role']  = ' '
-    Slim::Engine.default_options[:merge_attrs]['data-block'] = ' '
+    Slim::Engine.options[:merge_attrs]['data-role']  = ' '
+    Slim::Engine.options[:merge_attrs]['data-block'] = ' '
   end
 
   # Add assets paths to standalone Sprockets environment.
