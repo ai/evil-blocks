@@ -4,16 +4,16 @@
 
 Evil Block is a tiny JS framework for web pages. It is based on 4 ideas:
 
-* **Split code to independent blocks.** “Divide and rule” is always good idea.
+* **Split code to independent blocks.** “Divide and conquer” is always good idea.
 * **Blocks communicate by events.** Events is an easy and safe method
-  to clean very complicated dependencies between controls.
-* **Separate JS and CSS.** You should use classes only for styles and bind JS
-  by selectors with special attributes. So you can update your styles without
-  fear to break your scripts.
+  to keep complicated dependencies between controls very clean.
+* **Separate JS and CSS.** You should only use classes for styles and bind JS
+  by special attribute selectors. This way you can update your styles without
+  fear to break any scripts.
 * **Try not to render on client.** 2-way data-binding looks very cool,
-  but it has a [big price]. Most of web pages (instead of web applications)
-  can render all HTML on server and use client rendering only in few small
-  places. Without rendering we can incredibly clean code and architecture.
+  but it has a [big price]. Most of web pages (unlike web applications)
+  can render all HTML on server and use client rendering only in few places.
+  Without rendering we can have incredibly clean code and architecture.
 
 See also [Evil Front], a pack of helpers for Ruby on Rails and Evil Blocks.
 
