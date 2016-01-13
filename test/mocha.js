@@ -1,9 +1,6 @@
-jsdom    = require('jsdom')
-window   = jsdom.jsdom().createWindow();
+jsdom    = require('jsdom');
+window   = window = jsdom.jsdom().defaultView;
 document = window.document;
-global.document.implementation.createHTMLDocument = function (html, url) {
-    return jsdom.html(html);
-};
 
 global.location = { href: '' };
 
