@@ -1,3 +1,6 @@
+# 0.6.4
+* Add Sprockets 3 support.
+
 # 0.6.3
 * Add Slim 3.0 support (by Andrey Krivko).
 
