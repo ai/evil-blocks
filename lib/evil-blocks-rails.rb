@@ -14,13 +14,13 @@ module EvilBlocks
 
   # Add assets paths to standalone Sprockets environment.
   def self.install(sprockets)
-    sprockets.append_path(Pathname(__FILE__).dirname)
+    sprockets.paths << Pathname(__FILE__).dirname
   end
 
   if defined? ::Rails
     class Engine < ::Rails::Engine
-      initializer 'evil-blocks' do
-        EvilBlocks.install(Rails.application.assets)
+      initializer 'evil-blocks' do |app|
+        EvilBlocks.install(app.config.assets)
         EvilBlocks.install_to_slim! if defined?(Slim::Parser)
       end
     end
