@@ -1,3 +1,6 @@
+## 0.7 (Ranger Baker, 28th January 1951)
+* Rename `evil-blocks.debug` to `evil-blocks-debug` for Sprockets 3 support.
+
 ## 0.6.4
 * Add Sprockets 3 support.
 

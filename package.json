@@ -1,6 +1,6 @@
 {
   "name": "evil-blocks",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "dependencies": {
     "jquery": ">= 2.1.0"
   },
