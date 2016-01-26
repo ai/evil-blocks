@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Tiny JS framework for web pages to split your app ' +
                   'to independent blocks'
 
-  s.files            = ['lib/evil-blocks.debug.js', 'lib/evil-blocks.js',
+  s.files            = ['lib/evil-blocks-debug.js', 'lib/evil-blocks.js',
                         'lib/evil-blocks-rails.rb',
                         'LICENSE', 'README.md', 'ChangeLog.md']
   s.extra_rdoc_files = ['LICENSE', 'README.md', 'ChangeLog.md']
