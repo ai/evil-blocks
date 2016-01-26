@@ -1,10 +1,10 @@
-# 0.6.4
+## 0.6.4
 * Add Sprockets 3 support.
 
-# 0.6.3
+## 0.6.3
 * Add Slim 3.0 support (by Andrey Krivko).
 
-# 0.6.2
+## 0.6.2
 * Fix IE 8 support (by Dmitry Klimensky).
 * Fix event name in debugger (by Andrey Krivko).
 
