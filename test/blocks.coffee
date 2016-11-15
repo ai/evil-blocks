@@ -1,13 +1,13 @@
-evil     = window.evil
-body     = (html) -> evil.block.vitalize fixtures.html(html)
+evilBlock = require('../lib/evil-blocks')
+body     = (html) -> evilBlock.vitalize fixtures.html(html)
 fixtures = null
 
-describe 'evil.block', ->
+describe 'evilBlock', ->
   before -> fixtures = $('#fixtures')
 
   afterEach ->
     fixtures.html('')
-    evil.block.defined = []
+    evilBlock.defined = []
 
   it 'adds role alias', ->
     body '<b data-role="roleTest" />' +
@@ -27,31 +27,31 @@ describe 'evil.block', ->
 
     it 'calls vitalize on document by default', ->
       called = false
-      evil.block '.page', ->
+      evilBlock '.page', ->
         called = true
 
       fixtures.html('<b class="page" />')
-      evil.block.vitalize()
+      evilBlock.vitalize()
 
       called.should.be.true
 
     it 'calls vitalize on subnode', ->
       called = []
-      evil.block '.page', ->
+      evilBlock '.page', ->
         called.push @block[0].tagName
 
       fixtures.html('<a class="page" /><span><b class="page" /></span>')
-      evil.block.vitalize($('span'))
+      evilBlock.vitalize($('span'))
 
       called.should.eql ['B']
 
     it 'accepts DOM nodes', ->
       called = []
-      evil.block '.page', ->
+      evilBlock '.page', ->
         called.push @block[0].tagName
 
       fixtures.html('<a class="page" /><span><b class="page" /></span>')
-      evil.block.vitalize($('#fixtures span'))
+      evilBlock.vitalize($('#fixtures span'))
 
       called.should.eql ['B']
 
@@ -59,7 +59,7 @@ describe 'evil.block', ->
 
     it 'understands function as init', ->
       called = false
-      evil.block '.page', -> called = true
+      evilBlock '.page', -> called = true
 
       body '<b class="no-page" />'
       called.should.be.false
@@ -69,7 +69,7 @@ describe 'evil.block', ->
 
     it 'executes callback only if find selector', ->
       called = false
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           called = true
 
@@ -81,38 +81,38 @@ describe 'evil.block', ->
 
     it 'executes only once on same block', ->
       called = 0
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           called += 1
 
       body '<b class="page" />'
       called.should.be.eql(1)
 
-      evil.block.vitalize fixtures
+      evilBlock.vitalize fixtures
       called.should.be.eql(1)
 
       fixtures.append('<a class="page" />')
-      evil.block.vitalize fixtures
+      evilBlock.vitalize fixtures
       called.should.be.eql(2)
 
     it 'works with multiple blocks on same node', ->
       called = ''
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           called += '1'
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           called += '2'
 
       body '<b class="page" />'
       called.should.be.eql('12')
 
-      evil.block.vitalize fixtures
+      evilBlock.vitalize fixtures
       called.should.be.eql('12')
 
     it 'creates properties for each role', ->
       prop = false
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           prop = @roleName
 
@@ -121,7 +121,7 @@ describe 'evil.block', ->
 
     it 'listens block events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'on fire burn': (e, param) ->
           burning += ' ' + e.type + ' ' + param
         'on ice': ->
@@ -133,7 +133,7 @@ describe 'evil.block', ->
 
     it 'checks source for block events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'on fire': ->
           burning = '1'
 
@@ -143,7 +143,7 @@ describe 'evil.block', ->
 
     it 'listens elements events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'fire burn on @a, @b': (e, param) ->
           burning += ' ' + e.el.data('role') + ' ' + param
         'ice on @a': ->
@@ -160,7 +160,7 @@ describe 'evil.block', ->
 
     it 'listens body events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'fire on body': (e, param) ->
           burning = param
         'ice on body': ->
@@ -172,7 +172,7 @@ describe 'evil.block', ->
 
     it 'listens body bubble events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'fire on body': ->
           burning = '1'
 
@@ -182,7 +182,7 @@ describe 'evil.block', ->
 
     it 'listens window events', ->
       burning = ''
-      evil.block '.page',
+      evilBlock '.page',
         'fire on window': (e, param) ->
           burning = param
 
@@ -192,7 +192,7 @@ describe 'evil.block', ->
 
     it 'fires event immedently if page already loaded', (done) ->
       burning = false
-      evil.block '.page',
+      evilBlock '.page',
         'load on window': ->
           burning = true
 
@@ -204,7 +204,7 @@ describe 'evil.block', ->
 
     it 'finds inside', ->
       finded = false
-      evil.block '.page',
+      evilBlock '.page',
         init: ->
           finded = @$('b').text()
 
@@ -213,7 +213,7 @@ describe 'evil.block', ->
 
     it 'has block property', ->
       block = []
-      evil.block '.page', ->
+      evilBlock '.page', ->
           block.push @block
 
       body '<div class="page"></div><div class="page"></div>'
@@ -227,13 +227,13 @@ describe 'evil.block', ->
     it 'calls init after all bindings', ->
       events = []
 
-      evil.block '.a',
+      evilBlock '.a',
         init: ->
           $('.b').trigger('fire')
         'on fire': ->
           events.push('a')
 
-      evil.block '.b',
+      evilBlock '.b',
         init: ->
           $('.a').trigger('fire')
         'on fire': ->
@@ -244,7 +244,7 @@ describe 'evil.block', ->
 
     it 'prevents to override properties by elements', ->
       value = null
-      evil.block '.page',
+      evilBlock '.page',
         one: 1
         'on fire': ->
           value = @one
