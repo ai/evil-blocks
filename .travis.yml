@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - "5"
 before_install:
+  - rvm install ruby-2.3.0
+  - rvm use 2.3.0
   - bundler install
 script:
   - rspec test/slim_spec.rb
